@@ -41,7 +41,7 @@ const GridTile: React.FC<GridTileProps> = ({
 const App: React.FC = () => {
   const [hidden, setHidden] = useState<boolean>(true);
   
-  const [size, setSize] = useState("5");
+  const [size, setSize] = useState("");
   
   var GRID_SIZE: number = 5; // nxn grid
   var MAX_ANIM_TIME: number = 1000; // time in ms
@@ -49,16 +49,17 @@ const App: React.FC = () => {
   const startGame = (): void =>  {
     setHidden(false);
     GRID_SIZE = parseInt(size);
-    console.log(GRID_SIZE)
+    // console.log(GRID_SIZE);
     resetGrid();
-    console.log(grid.length)
+    // console.log(grid.length);
   }
   //change to ints that can calculate distance from button press, 0 means off
   // Initialize 2D array for grid state
   const initializeGrid = (): number[][] => {
-    return Array(GRID_SIZE)
+    var gridSize: number = (size == "" ? GRID_SIZE : parseInt(size));
+    return Array(gridSize)
       .fill(null)
-      .map(() => Array(GRID_SIZE).fill(-1));
+      .map(() => Array(gridSize).fill(-1));
   };
 
   const convertToHex = ({r,g,b} : {r:number,g:number,b:number}): string => {
@@ -100,7 +101,7 @@ const App: React.FC = () => {
 
 
 const calculateTemperature = ((dist: number) => {
-  return (abs(GRID_SIZE-dist))*1000;
+  return (abs(parseInt(size)-dist))*1000;
 });
 
     
@@ -160,6 +161,7 @@ function clamp( x: number, min: number, max: number ) {
 
 }
 
+
   return (
     <div className = {`flex flex-col items-center justify-center min-h-screen bg-crust   `}>
       <div className=" min-w-[30vw] flex flex-col gap-12 rounded-lg p-6">
@@ -170,7 +172,7 @@ function clamp( x: number, min: number, max: number ) {
             <input 
               name="Size" 
               className=" border-2 border-white text-gray-300 h-6 pl-2 "
-              value={size}
+              value={size == "" ? "" : size}
               onChange={e =>  {setSize(e.target.value)} }
               type="number" 
             />
@@ -190,8 +192,8 @@ function clamp( x: number, min: number, max: number ) {
           <div
             className={`grid gap-1 p-8 bg-base rounded `}
             style={hidden ? undefined : {
-              gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
-              gridTemplateRows: `repeat(${GRID_SIZE}, 1fr)`,
+              gridTemplateColumns: `repeat(${parseInt(size)}, 1fr)`,
+              gridTemplateRows: `repeat(${parseInt(size)}, 1fr)`,
             }}
           >
             {grid.map((row, rowIndex) =>
@@ -201,7 +203,7 @@ function clamp( x: number, min: number, max: number ) {
                   row={rowIndex}
                   col={colIndex}
                   distance={dist}
-                  duration={MAX_ANIM_TIME/(2*((GRID_SIZE-1)**2)**(0.5))}
+                  duration={MAX_ANIM_TIME/(2*((parseInt(size)-1)**2)**(0.5))}
                   onClick={handleTileClick}
                   color={convertToHex(colorTemperatureToRGB(calculateTemperature(dist)))}
                 />
