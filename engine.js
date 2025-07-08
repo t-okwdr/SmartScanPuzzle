@@ -421,6 +421,7 @@ function createLPBFGame(gameSize) {
 exports.createLPBFGame = createLPBFGame;
 // Demo usage
 console.log("=== LPBF Simulation Game Demo ===");
+
 try {
     // Create a game with size 3 (smallest allowed)
     var game = createLPBFGame(3);
