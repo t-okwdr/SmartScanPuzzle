@@ -48,7 +48,7 @@ const App: React.FC = () => {
   
   const startGame = (): void =>  {
     setHidden(false);
-    GRID_SIZE = parseInt(size);
+    GRID_SIZE = parseInt(size+1);
     console.log(GRID_SIZE)
     resetGrid();
     console.log(grid.length)
