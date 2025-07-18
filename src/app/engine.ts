@@ -9,7 +9,7 @@ export class LPBFSimulation {
   }
 
   async init(): Promise<void> {
-    const res = await fetch("http://localhost:8000/api/init", {
+    const res = await fetch("https://smart-scan-fast-api.vercel.app/api/init", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ size: this.size }),
@@ -26,7 +26,7 @@ export class LPBFSimulation {
   }
 
 public async makeMove(index: number): Promise<{ success: boolean; message: string }> {
-  const res = await fetch("http://localhost:8000/api/move", {
+  const res = await fetch("https://smart-scan-fast-api.vercel.app/api/move", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ index }),
@@ -39,7 +39,7 @@ public async makeMove(index: number): Promise<{ success: boolean; message: strin
   const data = await res.json();
 
   // Pull updated map from backend
-  const statusRes = await fetch("http://localhost:8000/api/status");
+  const statusRes = await fetch("https://smart-scan-fast-api.vercel.app/api/status");
   const status = await statusRes.json();
   this.grid = status.temperatureMap;
 
@@ -56,7 +56,7 @@ public async makeMove(index: number): Promise<{ success: boolean; message: strin
   }
 
   public async getFinalAccuracy(): Promise<number> {
-    const res = await fetch("http://localhost:8000/api/accuracy");
+    const res = await fetch("https://smart-scan-fast-api.vercel.app/api/accuracy");
     const data = await res.json();
     return data.accuracy;
   }
