@@ -50,14 +50,20 @@ public async makeMove(index: number): Promise<{ success: boolean; message: strin
 }
 
 
-  public isGameComplete(): boolean {
+  public async isGameComplete(): Promise<boolean> {
+      const statusRes = await fetch("https://smart-scan-fast-api.vercel.app/api/status");
+      const status = await statusRes.json();
+      return status.complete;
     // TODO: optionally pull this from backend later
-    return false;
   }
 
-  public async getFinalAccuracy(): Promise<number> {
-    const res = await fetch("https://smart-scan-fast-api.vercel.app/api/accuracy");
-    const data = await res.json();
-    return data.accuracy;
+  public async getAccuracy(): Promise<number> {
+    
+      const res = await fetch("https://smart-scan-fast-api.vercel.app/api/status");
+      const data = await res.json();
+      return data.accuracy;
+    // const res = await fetch("https://smart-scan-fast-api.vercel.app/api/accuracy");
+    // const data = await res.json();
+    // return data.accuracy;
   }
 }

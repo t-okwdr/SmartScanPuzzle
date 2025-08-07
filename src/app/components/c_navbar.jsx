@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router";
 export default function Navbar() {
   const navItems = [
     { name: "about", href: "/about" },
@@ -6,7 +7,7 @@ export default function Navbar() {
     { name: "levels", href: "/levels" },
   ];
 
-  return (
+  return ( 
     <nav className=" absolute top-0 z-50 ">
       <div className="flex justify-center items-center h-16 w-screen">
         {/* Desktop Navigation */}
